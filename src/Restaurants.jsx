@@ -1,46 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import { supabase } from '../utils/supabase'
 
-function App() {
-  const [restaurants, setRestaurants] = useState([]);
-  const [name, setName] = useState('');
+function Restaurants() {
+  const [restos, SetRestos] = useState([])
 
-  // // Récupérer les restaurants au chargement
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/restaurants')
-  //     .then(res => res.json())
-  //     .then(data => setRestaurants(data))
-  //     .catch(err => console.error(err));
-  // }, []);
+  useEffect(() => {
+    async function getRestos() {
+      const { data: restos } = await supabase.from('restaurant').select()
 
-  // Ajouter un restaurant
-  const addRestaurant = async () => {
-    const res = await fetch('http://localhost:3001/api/restaurants', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nom: name })
-    });
-    const data = await res.json();
-    setRestaurants([...restaurants, data]);
-    setName('');
-  };
+      if (restos.length > 1) {
+        console.log('tqtq')
+        SetRestos(restos)
+      }
+      else {
+        console.log('toto')
+      }
+    }
+    getRestos()
+
+  }, [])
 
   return (
     <div>
-      <h1>Restaurants</h1>
-      <ul>
-        {restaurants.map(r => (
-          <li key={r.id}>{r.nom}</li>
-        ))}
-      </ul>
-
-      <input
-        value={name}
-        onChange={e => setName(e.target.value)}
-        placeholder="Nom du restaurant"
-      />
-      <button onClick={addRestaurant}>Ajouter</button>
+      <h1>Les restaurants :</h1>
+      {restos.map((resto) => (
+        <li key={resto.id_restaurant}>{resto.nom} - {resto.longitude}, {resto.latitude}</li>
+      ))}
     </div>
-  );
+  )
 }
+export default Restaurants
 
-export default App;
