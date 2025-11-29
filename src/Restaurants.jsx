@@ -5,29 +5,34 @@ function Restaurants() {
   const [restos, SetRestos] = useState([])
 
   useEffect(() => {
-    async function getRestos() {
-      const { data: restos } = await supabase.from('restaurant').select()
-
-      if (restos.length > 1) {
-        console.log('tqtq')
-        SetRestos(restos)
-      }
-      else {
-        console.log('toto')
-      }
-    }
-    getRestos()
+    fetch('https://enseirbsgbd.azurewebsites.net/restaurant')
+      .then((response) => {
+        if (!response.ok) throw new Error('Erreur réseau');
+        return response.json();
+      })
+      .then((data) => {
+        console.log("2console" + data);
+        SetRestos(data)
+      }).catch((err) => {
+        console.log(err);
+      })
 
   }, [])
+
 
   return (
     <div>
       <h1>Les restaurants :</h1>
-      {restos.map((resto) => (
-        <li key={resto.id_restaurant}>{resto.nom} - {resto.longitude}, {resto.latitude}</li>
-      ))}
+      <ul>
+        {restos.map((resto, index) => (
+          <li key={index}>
+            {resto.categorie} — {resto.restaurants}
+          </li>
+        ))}
+      </ul>
     </div>
-  )
+  );
 }
+
 export default Restaurants
 
