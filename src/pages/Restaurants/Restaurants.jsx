@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../utils/supabase'
 
 function Restaurants() {
   const [restos, SetRestos] = useState([])

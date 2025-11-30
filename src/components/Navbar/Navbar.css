@@ -1,0 +1,23 @@
+.navbar{
+  display: flex;
+  list-style: none;
+  gap:20px;
+  align-items: center;
+
+}
+.navbar-menu{
+  display: flex;
+  list-style: none;
+  gap:20px;
+
+}
+
+.navbar .active{
+  padding-bottom: 2px;
+  border-bottom: 2px solid grey;
+}
+
+.navbar-menu li a {
+  color: white;         /* ta couleur */
+  text-decoration: none;
+}
