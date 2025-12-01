@@ -10,7 +10,6 @@ function Restaurants() {
         return response.json();
       })
       .then((data) => {
-        console.log("2console" + data);
         SetRestos(data)
       }).catch((err) => {
         console.log(err);
